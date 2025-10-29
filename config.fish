@@ -1,11 +1,10 @@
 # Fisher plugins:
-# jorgebucaran/fisher
-# franciscolourenco/done
-# jethrokuan/z
-# jorgebucaran/replay.fish
-# edc/bass
-# nickeb96/puffer-fish
-# gazorby/fish-abbreviation-tips
+## jorgebucaran/fisher
+## franciscolourenco/done
+## jorgebucaran/replay.fish
+## edc/bass
+## nickeb96/puffer-fish
+## gazorby/fish-abbreviation-tips
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
@@ -22,7 +21,6 @@ alias -s tgz='tar -xzvf' >/dev/null
 alias -s zip='unzip' >/dev/null
 alias -s bz2='tar -xjvf' >/dev/null
 alias -s jar='java -jar' >/dev/null
-alias -s md='open -a /Applications/Typora.app' >/dev/null
 
 alias os='cd ~/Developer/open-source'
 alias cppwd='pwd | tr -d \n | pbcopy'
@@ -40,9 +38,9 @@ alias gpdo="git push --delete origin"
 alias gpsync="gco (get_main_branch) && gpl && git push origin (get_main_branch)"
 alias gpl="git pull --rebase"
 alias gcl="git clone"
+alias gclo="cd ~/Developer/open-source && git clone"
 alias gst="git stash"
 alias gstp="git stash pop"
-alias cloneo="cd ~/Developer/open-source && git clone"
 
 alias main='git checkout (get_main_branch)'
 alias gcd="git checkout dev"
@@ -155,9 +153,9 @@ alias lint="nr lint"
 alias lintf="nr lint --fix"
 alias re="nr release"
 alias nio="ni --prefer-offline"
-alias u="nu"
-alias ui="nu -i"
-alias uli="nu --latest -i"
+alias u="nup"
+alias ui="nup -i"
+alias uli="nup --latest -i"
 alias reni="rm -fr node_modules && ni"
 alias nif="ni -f"
 alias ny="pnpm why --exclude-peers -r"
@@ -328,7 +326,6 @@ function gco
     return $status
 end
 
-
 function pr
     gh pr checkout -b "pr/$argv" $argv
     # and set PR_DATA (gh api /repos/{owner}/{repo}/pulls/$argv)
@@ -363,9 +360,11 @@ end
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
+set -gx HOMEBREW_DOWNLOAD_CONCURRENCY auto
 
 # 1Passsword SSH
 set -gx SSH_AUTH_SOCK $HOME/.1password/agent.sock
+source $HOME/.config/op/plugins.sh
 
 # Golang
 set -gx GOPATH $HOME/go
@@ -375,8 +374,7 @@ fish_add_path $GOPATH/bin
 # fish_add_path $HOME/Developer/flutter/bin
 
 # Android
-set -gx ANDROID_HOME $HOME/Android
-set -gx NDK_HOME ~/Android/ndk/25.1.8937393
+set -gx ANDROID_HOME $HOME/Library/Android
 
 # Composer
 fish_add_path $HOME/.composer/vendor/bin
@@ -391,18 +389,12 @@ status --is-interactive; and source (jenv init -|psub)
 # iTerm2
 source $HOME/.iterm2_shell_integration.fish
 
-# Python pdm
-if test -n "$PYTHONPATH"
-    set -x PYTHONPATH '/opt/homebrew/opt/pdm/libexec/lib/python3.10/site-packages/pdm/pep582' $PYTHONPATH
-else
-    set -x PYTHONPATH '/opt/homebrew/opt/pdm/libexec/lib/python3.10/site-packages/pdm/pep582'
-end
+set -a fish_user_paths ./node_modules/.bin
 
 # pnpm
 set -gx PNPM_HOME $HOME/Library/pnpm
 fish_add_path $PNPM_HOME
 # pnpm end
-set -a fish_user_paths ./node_modules/.bin
 
 # Corepack
 set -gx COREPACK_ENABLE_DOWNLOAD_PROMPT 0
@@ -424,3 +416,6 @@ zoxide init fish | source
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init.fish 2>/dev/null || :
+
+# uv
+fish_add_path "$HOME/.local/bin"
