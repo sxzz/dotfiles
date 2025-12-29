@@ -45,3 +45,5 @@
 	df = diff
 [url "git@github.com:"]
 	insteadof = https://github.com/
+[include]
+	path = ~/.gitconfig.local
