@@ -1,5 +1,5 @@
 [user]
-	name = 三咲智子 Kevin Deng
+	name = Kevin Deng
 	email = sxzz@sxzz.moe
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBiM3iciB9JcRtEtmXoCGV1UpQ65WcVOLv71e/v/mM0
 [commit]
@@ -17,6 +17,7 @@
 [core]
 	autocrlf = input
 	pager = delta
+	excludesfile = /Users/kevin/.gitignore
 [tag]
 	gpgSign = true
 [pull]
@@ -35,8 +36,12 @@
 	format = ssh
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[log]
+	date = iso-local
 [alias]
-undo = reset --soft HEAD^
-cancel = reset --hard HEAD^
-append = commit -a --amend --no-edit
-df = diff
+	undo = reset --soft HEAD^
+	cancel = reset --hard HEAD^
+	append = commit -a --amend --no-edit
+	df = diff
+[url "git@github.com:"]
+	insteadof = https://github.com/

@@ -156,7 +156,7 @@ alias nio="ni --prefer-offline"
 alias u="nup"
 alias ui="nup -i"
 alias uli="nup --latest -i"
-alias reni="rm -fr node_modules && ni"
+alias reni="rm -fr node_modules pnpm-lock.yaml yarn.lock && ni"
 alias nif="ni -f"
 alias ny="pnpm why --exclude-peers -r"
 
@@ -360,7 +360,6 @@ end
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
-set -gx HOMEBREW_DOWNLOAD_CONCURRENCY auto
 
 # 1Passsword SSH
 set -gx SSH_AUTH_SOCK $HOME/.1password/agent.sock
