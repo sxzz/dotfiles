@@ -243,7 +243,7 @@ function gbp
         return $_status
     end
 
-    set GONE_BRANCHES (git branch -v | grep -v "^*" | grep "\[gone\]" | awk '{print $1}')
+    set GONE_BRANCHES (git branch -v | grep -v "^[*+]" | grep "\[gone\]" | awk '{print $1}')
     if not test "$GONE_BRANCHES"
         console.yellow "No gone branches\n"
         return 1
@@ -349,11 +349,10 @@ function npm_scripts
     jq -r '.scripts | keys[]' <package.json
 end
 
-# Environment Variables
-# fish_add_path /usr/local/sbin
 
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Local bin
+fish_add_path -g "$HOME/.local/bin"
+# fish_add_path -g /usr/local/sbin
 
 # 1Passsword SSH
 set -gx SSH_AUTH_SOCK $HOME/.1password/agent.sock
@@ -361,50 +360,35 @@ source $HOME/.config/op/plugins.sh
 
 # Golang
 set -gx GOPATH $HOME/go
-fish_add_path $GOPATH/bin
+fish_add_path -g $GOPATH/bin
 
 # Flutter
-# fish_add_path $HOME/Developer/flutter/bin
+# fish_add_path -g $HOME/Developer/flutter/bin
 
 # Android
 set -gx ANDROID_HOME $HOME/Library/Android
 
 # Composer
-fish_add_path $HOME/.composer/vendor/bin
+fish_add_path -g $HOME/.composer/vendor/bin
 
 # Cargo, Rust
-fish_add_path $HOME/.cargo/bin
+fish_add_path -g $HOME/.cargo/bin
 
 set -a fish_user_paths ./node_modules/.bin
-
-# pnpm
-set -gx PNPM_HOME $HOME/Library/pnpm
-fish_add_path $PNPM_HOME/bin
-# pnpm end
 
 # Bun
 set -Ux BUN_INSTALL "$HOME/.bun"
 set -px --path PATH "$HOME/.bun/bin"
 
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+fish_add_path -g /opt/homebrew/opt/curl/bin
+
 # starship
 starship init fish | source
-
-# Ruby
-fish_add_path /opt/homebrew/opt/ruby/bin
-fish_add_path $HOME/.foundry/bin
 
 zoxide init fish | source
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init.fish 2>/dev/null || :
-
-# uv
-fish_add_path "$HOME/.local/bin"
-
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /Users/kevin/.lmstudio/bin
-# End of LM Studio CLI section
-
-# mise
-mise activate fish | source
